@@ -10,9 +10,7 @@ namespace BulkyBookWeb.Controllers
         private readonly ApplicationDbContext _db;
 
         public CategoryController(ApplicationDbContext db)
-        {
-            _db = db;
-        }
+            => _db = db;
 
         public IActionResult Index()
         {
@@ -22,10 +20,8 @@ namespace BulkyBookWeb.Controllers
         }
 
         // GET
-        public IActionResult Create()
-        {
-            return View();
-        }
+        public IActionResult Create() 
+            => View();
 
         // POST
         [HttpPost]
@@ -33,9 +29,8 @@ namespace BulkyBookWeb.Controllers
         public IActionResult Create(Category obj)
         {
             if (obj.Name == obj.DisplayOrder.ToString())
-            {
                 ModelState.AddModelError("Name", "The Display Order cannot exactly match the Name.");
-            }
+
             if (ModelState.IsValid)
             {
                 _db.Categories.Add(obj);
@@ -53,16 +48,12 @@ namespace BulkyBookWeb.Controllers
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
-            {
                 return NotFound();
-            }
 
             var category = _db.Categories.FirstOrDefault(c => c.Id == id);
 
             if (category == null)
-            {
                 return NotFound();
-            }
 
             return View(category);
         }
@@ -73,9 +64,8 @@ namespace BulkyBookWeb.Controllers
         public IActionResult Edit(Category obj)
         {
             if (obj.Name == obj.DisplayOrder.ToString())
-            {
                 ModelState.AddModelError("Name", "The Display Order cannot exactly match the Name.");
-            }
+
             if (ModelState.IsValid)
             {
                 _db.Categories.Update(obj);
